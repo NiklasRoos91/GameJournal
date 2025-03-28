@@ -18,8 +18,8 @@ namespace GameJournal.Services
         {
 
         }
-        public List<ReviewDto> GetReviewByGame(string gameId)
-        {
-        }
+        //public List<ReviewDto> GetReviewByGame(string gameId)
+        //{
+        //}
     }
 }

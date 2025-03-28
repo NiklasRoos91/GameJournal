@@ -8,6 +8,6 @@ namespace GameJournal.Interfaces
         void AddReview(Review review);
         void RemoveReview(int gameId);
         void UpdateReview(Review review);
-        List<ReviewDto> GetReviewByGame(string gameId);
+        //List<ReviewDto> GetReviewByGame(string gameId);
     }
 }
