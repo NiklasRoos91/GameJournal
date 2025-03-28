@@ -1,11 +1,12 @@
 ﻿using GameJournal.DbContext;
 using GameJournal.DTOs;
+using GameJournal.Interfaces;
 using GameJournal.Models;
 using static Bogus.DataSets.Name;
 
 namespace GameJournal.Services
 {
-    public class GameService
+    public class GameService : IGameService
     {
         private readonly GameJournalContext _context;
 
