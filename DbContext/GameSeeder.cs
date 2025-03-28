@@ -7,7 +7,6 @@ namespace GameJournal.DbContext
 {
     public class GameSeeder
     {
-
         public List<Game> GenerateGames(int numberOfGames)
         {
             // Skapa en instans av Faker för att generera slumpmässiga spel

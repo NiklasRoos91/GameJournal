@@ -1,4 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using GameJournal.Models;
+using GameJournal.Services;
+using GameJournal.DbContext;
+using GameJournal.DTOs;
+using Microsoft.Identity.Client;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,6 +13,15 @@ namespace GameJournal.Controllers
     [ApiController]
     public class ReviewsController : ControllerBase
     {
+        private readonly GameJournalContext _gameJournalContext;
+        private readonly ReviewService _reviewService;
+
+        public ReviewsController(GameJournalContext gameJournalContext, ReviewService reviewService)
+        {
+            _gameJournalContext = gameJournalContext;
+            _reviewService = reviewService;
+        }
+
         // GET: api/<ReviewsController>
         [HttpGet]
         public IEnumerable<string> Get()
