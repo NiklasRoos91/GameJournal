@@ -1,3 +1,7 @@
+using GameJournal.DbContext;
+using GameJournal.Services;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace GameJournal
 {
@@ -8,13 +12,27 @@ namespace GameJournal
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            builder.Services.AddDbContext<GameJournalContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("GameJournalDatabase")));
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddScoped<GameService>();
+            builder.Services.AddScoped<GameSeeder>();  // Lägg till GameSeeder till DI-container
 
             var app = builder.Build();
+
+            // Skapa en scope för att använda GameSeeder
+            using (var scope = app.Services.CreateScope())
+            {
+                var seeder = scope.ServiceProvider.GetRequiredService<GameSeeder>();
+                var games = seeder.GenerateGames(10);  // Skapa 10 slumpmässiga spel
+                var context = scope.ServiceProvider.GetRequiredService<GameJournalContext>();  // Hämta GameJournalContext
+                context.Games.AddRange(games);  // Lägg till genererade spel till databasen
+                context.SaveChanges();  // Spara ändringarna i databasen
+            }
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
