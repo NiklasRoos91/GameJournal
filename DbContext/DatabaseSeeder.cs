@@ -8,16 +8,16 @@
 
         public DatabaseSeeder(GameJournalContext context, GameSeeder gameSeeder, ReviewSeeder reviewSeeder)
         {
-            _context = context;
-            _gameSeeder = gameSeeder;
-            _reviewSeeder = reviewSeeder;
+            _context = context ?? throw new ArgumentNullException(nameof(context));
+            _gameSeeder = gameSeeder ?? throw new ArgumentNullException(nameof(gameSeeder));
+            _reviewSeeder = reviewSeeder ?? throw new ArgumentNullException(nameof(reviewSeeder));
         }
 
         public void SeedDatabase()
         {
-            var games = _gameSeeder.GenerateGames(10);
+            var games = _gameSeeder.GenerateGames(1);
 
-            _reviewSeeder.SeedReview(10);
+            _reviewSeeder.SeedReview(1);
         }
     }
 }

@@ -6,8 +6,10 @@ namespace GameJournal.Interfaces
     public interface IReviewService
     {
         void AddReview(Review review);
-        void RemoveReview(int gameId);
-        void UpdateReview(Review review);
-        //List<ReviewDto> GetReviewByGame(string gameId);
+        void RemoveReviewByReviewId(int reviewId);
+        void RemoveReviewsByGameId(int gameId);
+        ReviewDto UpdateReview(int reviewId, ReviewDto reviewDto);
+        ReviewDto GetReviewByReviewId(int reviewId);
+        List<ReviewDto> GetReviewsByGameID(int gameId);
     }
 }

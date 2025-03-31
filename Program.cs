@@ -1,5 +1,6 @@
 using GameJournal.DbContext;
 using GameJournal.Services;
+using GameJournal.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -19,10 +20,11 @@ namespace GameJournal
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            builder.Services.AddScoped<GameService>();
-            builder.Services.AddScoped<GameSeeder>();  // Lägg till GameSeeder till DI-container
-            builder.Services.AddScoped<ReviewSeeder>();  // Lägg till ReviewSeeder till DI-container
-            builder.Services.AddScoped<DatabaseSeeder>();  // Lägg till DatabaseSeeder till DI-container
+            builder.Services.AddScoped<IGameService, GameService>();
+            builder.Services.AddScoped<IReviewService, ReviewService>();
+            builder.Services.AddScoped<GameSeeder>(); 
+            builder.Services.AddScoped<ReviewSeeder>();
+            builder.Services.AddScoped<DatabaseSeeder>();
 
             var app = builder.Build();
 

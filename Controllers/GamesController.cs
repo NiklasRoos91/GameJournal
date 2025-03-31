@@ -3,6 +3,7 @@ using GameJournal.Models;
 using GameJournal.Services;
 using GameJournal.DbContext;
 using GameJournal.DTOs;
+using GameJournal.Interfaces;
 
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -13,14 +14,15 @@ namespace GameJournal.Controllers
     [ApiController]
     public class GamesController : ControllerBase
     {
-        private readonly GameService _gameService;
+        private readonly IGameService _gameService;
         private readonly GameJournalContext _context;
+        private readonly IReviewService _reviewService;
 
-
-        public GamesController(GameService gameService, GameJournalContext context)
+        public GamesController(IGameService gameService, GameJournalContext context, IReviewService reviewService)
         {
-            _gameService = gameService;
-            _context = context;
+            _gameService = gameService ?? throw new ArgumentNullException(nameof(gameService));
+            _context = context ?? throw new ArgumentNullException(nameof(context));
+            _reviewService = reviewService ?? throw new ArgumentNullException(nameof(reviewService));
         }
 
         // GET: api/<GamesController>
@@ -32,7 +34,7 @@ namespace GameJournal.Controllers
         }
 
         // GET api/<GamesController>/5
-        [HttpGet("GetAllGamesByGenre{genre}")]
+        [HttpGet("GetAllGamesByGenre/{genre}")]
         public ActionResult<List<GameDto>> GetGamesByGenre(string genre)
         {
             List<GameDto> gameDtos = _gameService.GetGamesByGenre(genre);
@@ -40,7 +42,7 @@ namespace GameJournal.Controllers
         }
 
         // GET api/<GamesController>/6
-        [HttpGet("GetAllGamesByStatus{status}")]
+        [HttpGet("GetAllGamesByStatus/{status}")]
         public ActionResult<List<GameDto>> GetGamesByStatus(string status)
         {
             List<GameDto> gameDtos = _gameService.GetGamesByStatus(status);
@@ -76,6 +78,7 @@ namespace GameJournal.Controllers
             {
                 return NotFound();
             }
+            _reviewService.RemoveReviewsByGameId(game.GameId);
 
             _gameService.RemoveGame(game);
             return NoContent();
