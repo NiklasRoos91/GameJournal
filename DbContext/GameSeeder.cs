@@ -11,7 +11,7 @@ namespace GameJournal.DbContext
         
         public GameSeeder(GameJournalContext context)
         {
-            _context = context;
+            _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
         public List<Game> GenerateGames(int numberOfGames)

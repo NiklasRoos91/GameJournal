@@ -11,7 +11,7 @@ namespace GameJournal.DbContext
         
         public ReviewSeeder(GameJournalContext context)
         {
-            _context = context;
+            _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
         public void SeedReview(int numberOfReviews)
