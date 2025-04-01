@@ -2,6 +2,10 @@ using GameJournal.DbContext;
 using GameJournal.Services;
 using GameJournal.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using FluentValidation;
+using GameJournal.Validators;
+
 
 
 namespace GameJournal
@@ -17,6 +21,9 @@ namespace GameJournal
                 options.UseSqlServer(builder.Configuration.GetConnectionString("GameJournalDatabase")));
 
             builder.Services.AddControllers();
+
+            // Registrerar alla validatorer automatiskt
+            builder.Services.AddValidatorsFromAssemblyContaining<Program>();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();

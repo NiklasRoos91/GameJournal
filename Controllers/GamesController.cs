@@ -64,16 +64,16 @@ namespace GameJournal.Controllers
         }
 
         // PUT api/<GamesController>/5
-        [HttpPut("ChangeStatus/{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut("ChangeStatus/{gameId}")]
+        public void ChangeStatus(int gameId, [FromBody] string status)
         {
         }
 
         // DELETE api/<GamesController>/5
-        [HttpDelete("RemoveGame/{id}")]
-        public IActionResult DeleteGame(int id)
+        [HttpDelete("RemoveGame/{gameId}")]
+        public IActionResult DeleteGame(int gameId)
         {
-            var game = _gameService.GetGameById(id);
+            var game = _gameService.GetGameById(gameId);
             if (game == null)
             {
                 return NotFound();
